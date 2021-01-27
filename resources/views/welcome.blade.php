@@ -15,7 +15,7 @@
         <div id="app">
             <div class="min-h-screen md:flex">
                 <div class="flex-1 min-h-screen text-gray-800">
-                    <main>
+                    <main class="container mx-auto md:container md:mx-auto sm:container sm:mx-auto">
                         <router-view></router-view>
                     </main>
                 </div>
