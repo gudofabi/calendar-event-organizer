@@ -7,9 +7,14 @@ const routes = [
         component: require('./views/Home.vue').default
     },
     {
-        path: '/about',
-        name: 'About',
-        component: require('./views/About.vue').default
+        path: '/co-foundry',
+        name: 'CoFoundry',
+        component: require('./views/CoFoundry.vue').default
+    },
+    {
+        path: '/appetiser',
+        name: 'Appetiser',
+        component: require('./views/Appetiser.vue').default
     }
 ]
 
