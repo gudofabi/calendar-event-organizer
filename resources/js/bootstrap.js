@@ -9,13 +9,19 @@ window._ = require('lodash');
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 import Vue from 'vue'
 import VueRouter from "vue-router"
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+
 
 
 window.Vue = Vue
+Vue.use(VueSweetalert2);
 Vue.use(VueRouter);
+
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

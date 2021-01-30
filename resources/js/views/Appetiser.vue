@@ -9,7 +9,6 @@
           <li class="p-1 text-sm">Appetiser</li>
         </ol>
         <h1 class="text-2xl font-semibold">Task Calendar</h1>
-        
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 m-5">
         <div>
@@ -28,8 +27,8 @@ export default {
       EventForm
     },
     methods: {
-      func_saveEvent() {
-        console.log('from home --- data');
+      func_saveEvent(data) {
+        console.log('frn the Appetiser');
       }
     }
 }
