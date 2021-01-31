@@ -8,7 +8,7 @@
           <li class="p-1 text-sm"><span>/</span></li>
           <li class="p-1 text-sm">Appetiser</li>
         </ol>
-        <h1 class="text-2xl font-semibold">Task Calendar</h1>
+        <h1 class="text-2xl font-semibold">Calendar</h1>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 m-5">
         <div>
