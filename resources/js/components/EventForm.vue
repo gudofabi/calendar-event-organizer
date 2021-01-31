@@ -89,10 +89,8 @@ export default {
 		},
 		func_submit() {
 			if(Object.keys(this.currentEvent).length === 0) {
-				console.log('save');
 				this.func_saveEvent();
 			}else {
-				console.log('update');
 				this.func_updateEvent(this.currentEvent);
 			}
 		},
@@ -117,7 +115,6 @@ export default {
 			}
 		},
 		async func_updateEvent(event) {
-			console.log(event);
 			try {
 				const { data } = await this.$http.put(`api/events/${event.id}`, this.data);
 				this.toast.fire({
