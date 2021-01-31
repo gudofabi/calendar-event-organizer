@@ -24,7 +24,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return $this->model->all();
     }
 
     /**
@@ -48,10 +48,27 @@ class EventController extends Controller
             return $this->model->create($event);
         
         } catch (\Exception $e) {
-        
             return $e;
-        
         }
+    }
+
+    public function update(Request $request, $id) {
+        $event = [
+            'name'          => $request->name,
+            'start_date'    => $request->start_date,
+            'end_date'      => $request->end_date,
+            'selected_days' => json_encode($request->selected_days),
+        ];
+
+        try {
+            return $this->model->update($event, $id);
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
+    public function show($id) {
+        return $this->model->show($id);
     }
 
     

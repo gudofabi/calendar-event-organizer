@@ -12,23 +12,70 @@
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6 m-5">
         <div>
-          <EventForm @save-event="func_saveEvent()"/>
+          <EventForm @save-event="func_saveEvent()" :current-event="currentEvents"/>
         </div>
-        <div class="col-span-1 lg:col-span-3">Calendar</div>
+        <div class="col-span-1 lg:col-span-3">
+          <FullCalendar :options="calendarOptions"/>
+        </div>
       </div>
   </div>
 </template>
 
 <script>
 import EventForm from '../components/EventForm'
+import FullCalendar from '@fullcalendar/vue'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+
 export default {
     name: 'Appetiser',
     components: {
-      EventForm
+      EventForm,
+      FullCalendar
+
+    },
+    data() {
+      return {
+        currentEvents: {},
+        calendarOptions: {
+          plugins: [ dayGridPlugin, interactionPlugin ],
+          initialView: 'dayGridMonth',
+          eventClick: this.func_handleEventClick,
+          dateClick: this.func_handleDateClick,
+          events: []
+        },
+        data: {},
+      }
+    },
+    mounted() {
+      this.func_getAllEvents();
     },
     methods: {
-      func_saveEvent(data) {
-        console.log('frn the Appetiser');
+      async func_getAllEvents() {
+        try {
+          const { data } = await this.$http.get('api/events');
+          const first = data[0];
+          this.calendarOptions.events = first.dates.map((item) => {
+            return {
+              title: first.name,
+              date: item.date,
+              id: first.id
+            }
+          });
+        } catch ({ response }) {
+          console.log(response);
+        }
+      },
+      func_saveEvent() {
+        this.func_getAllEvents();
+      },
+      async func_handleEventClick(item) {
+        const eventId = item.event.id;
+        const { data } = await this.$http.get(`api/events/${eventId}`);
+        this.currentEvents = data;
+      },
+      func_handleDateClick() {
+        this.currentEvents = '';
       }
     }
 }

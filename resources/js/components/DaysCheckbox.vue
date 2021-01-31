@@ -21,6 +21,7 @@ export default {
         }
     },
     computed: {
+        // Change to true or false if the day is selected
         selected() {
             return this.selectedDays.indexOf(this.day.name) > -1;
         }
