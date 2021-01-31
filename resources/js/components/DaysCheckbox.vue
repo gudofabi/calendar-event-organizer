@@ -1,7 +1,13 @@
 <template>
     <div class="ml-2 inline-block">
         <label class="inline-flex items-center">
-            <input type="checkbox" class="form-checkbox" @change="func_onChange(day)" :id="day.name" :value="day.name" :checked="selected" />
+            <input 
+                type="checkbox"
+                @change="func_onChange(day)" 
+                :id="day.name" 
+                :value="day.name" 
+                :checked="selected"
+            />
             <span class="ml-2">{{ day.name }}</span>
         </label>
     </div>

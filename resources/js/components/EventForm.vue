@@ -21,9 +21,14 @@
 		</div>
 		<div class="mb-3">
 				<label class="font-semibold text-sm mb-2 ml-1">Choose Day</label>
-					<div class="mt-2">
-						<DaysCheckbox v-for="day in days" :key="day.id" :day="day" :selected-days="data.selected_days" @add-to-selected="func_add"/>
-					</div>
+				<div class="mt-2">
+					<DaysCheckbox v-for="day in days"
+						:key="day.id" 
+						:day="day" 
+						:selected-days="data.selected_days" 
+						@add-to-selected="func_add"
+					/>
+				</div>
 		</div>
 		<div>
 			<button @click="func_submit()" type="button" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"> SAVE NOW</button>
@@ -68,11 +73,12 @@ export default {
 	},
 	watch: {
 		currentEvent(newValue) {
+
 			this.data = {
 				name: newValue.name,
 				start_date: newValue.start_date,
 				end_date: newValue.end_date,
-				selected_days: []
+				selected_days: newValue.selected_days
 			}
 		},
 
@@ -103,6 +109,12 @@ export default {
 					title: 'Event created!'
 				})
 
+				this.data = {
+					name: '',
+					start_date: '',
+					end_date: '',
+					selected_days: []
+				};
 				this.$emit('save-event');
 			} catch ({ response }) {
 				const errors = response.data.errors;
@@ -117,6 +129,12 @@ export default {
 		async func_updateEvent(event) {
 			try {
 				const { data } = await this.$http.put(`api/events/${event.id}`, this.data);
+				this.data = {
+					name: '',
+					start_date: '',
+					end_date: '',
+					selected_days: []
+				};
 				this.toast.fire({
 					icon: 'success',
 					title: 'Event updated!'

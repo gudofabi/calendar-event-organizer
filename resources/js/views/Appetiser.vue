@@ -72,7 +72,16 @@ export default {
       async func_handleEventClick(item) {
         const eventId = item.event.id;
         const { data } = await this.$http.get(`api/events/${eventId}`);
-        this.currentEvents = data;
+        const selectedDays = JSON.parse(data.selected_days);
+
+        this.currentEvents = {
+          ...data,
+          selected_days: selectedDays.map(item => {
+            return item;
+          })
+        };
+
+        console.log(this.currentEvents);
       },
       func_handleDateClick() {
         this.currentEvents = '';
