@@ -13,6 +13,9 @@ import Vue from 'vue'
 import VueRouter from "vue-router"
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import VueProgress from 'vue-progress-path'
+import 'vue-progress-path/dist/vue-progress-path.css'
+import fabric from 'fabric';
 
 
 
@@ -20,6 +23,10 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 window.Vue = Vue
 Vue.use(VueSweetalert2);
 Vue.use(VueRouter);
+Vue.use(VueProgress, {
+    defaultShape: 'line'
+});
+Vue.use(fabric);
 
 
 /**
