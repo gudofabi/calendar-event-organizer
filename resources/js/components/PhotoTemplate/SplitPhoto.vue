@@ -1,12 +1,24 @@
 <template>
-  <div class="relative">
-      <UploadImage
-        :is-show="data_showUpload"
-        @browse-image="func_browseImage" 
-        @get-image="func_imageLoader"/>
-      <ProgressBar :is-show="data_showLoading"/>
-      <canvas id="singlePhoto" :width="canvasSize.width" :height="canvasSize.height"></canvas>
-      <ZoomRange @change-range="func_imageZoom" :is-show="data_showZoom"/>
+  <div class="flex w-full">
+      <div class="relative">
+        <UploadImage
+            :is-show="data_showUpload"
+            @browse-image="func_browseImage('splitPhoto1')" 
+            @get-image="func_imageLoader"/>
+        <ProgressBar :is-show="data_showLoading"/>
+        <canvas id="splitPhoto1" :width="364" :height="canvasSize.height">1</canvas>
+        <ZoomRange @change-range="func_imageZoom" :is-show="data_showZoom"/>
+      </div>
+      <div class="relative">
+        <UploadImage
+            :label="'Photo 2'"
+            :is-show="data_showUpload"
+            @browse-image="func_browseImage('splitPhoto2')" 
+            @get-image="func_imageLoader"/>
+        <ProgressBar :is-show="data_showLoading"/>
+        <canvas id="splitPhoto2" :width="364" :height="canvasSize.height">2</canvas>
+        <ZoomRange @change-range="func_imageZoom" :is-show="data_showZoom"/>
+      </div>
   </div>
 </template>
 
@@ -16,7 +28,7 @@ import ZoomRange from '../ZoomRange';
 import ProgressBar from '../ProgressBar'
 
 export default {
-    name: 'SinglePhoto',
+    name: 'SplitPhoto',
     components: {
         UploadImage,
         ZoomRange,
@@ -37,38 +49,14 @@ export default {
             data_showLoading: false
         }
     },
-    mounted() {
-        this.data_canvas = new fabric.Canvas('singlePhoto');
-        this.func_imageSelected();
-    },
-    watch: {
-        data_canvas(newValue) {
-            this.data_canvas = newValue;
-        }
-    },
     methods: {
-        func_imageZoom(e) {
-            const canvas = this.data_canvas;
-            const activeImage = canvas._activeObject;
-            const rangeValue = e.target.value - .9;
-
-
-            activeImage.set({
-                scaleX: rangeValue,
-                scaleY: rangeValue,
-                originX: "center", 
-                originY: "center"
-            });
-            canvas.centerObject(activeImage);
-            canvas.renderAll();
-
-        },
-        func_browseImage() {
+        func_browseImage(canvas) {
+            this.data_canvas = canvas;
             document.getElementById('browser-image').click();
         },
         func_imageLoader(e) {
             const reader = new FileReader();
-            const canvas = this.data_canvas;
+            const canvas = new fabric.Canvas(this.data_canvas);
             this.data_showLoading = true;
 
             setTimeout(() => {
@@ -88,27 +76,31 @@ export default {
 
                         canvas.add(image);
                         canvas.centerObject(image);
+                        canvas.renderAll();
                         this.data_showUpload = false;
                         this.data_showLoading = false
-                        console.log(image);
                     }
                 }
                 reader.readAsDataURL(e.target.files[0]);
             }, 3000);
             
         },
-        func_imageSelected() {
+        func_imageZoom(e) {
             const canvas = this.data_canvas;
-            canvas.on({
-                'selection:created': (e) => {
-                    this.data_showZoom = true;
-                },
-                'selection:cleared': (e) => {
-                    this.data_showZoom = false;
-                }
+            const activeImage = canvas._activeObject;
+            const rangeValue = e.target.value - .9;
+
+
+            activeImage.set({
+                scaleX: rangeValue,
+                scaleY: rangeValue,
+                originX: "center", 
+                originY: "center"
             });
+            canvas.centerObject(activeImage);
             canvas.renderAll();
-        }
+
+        },
     }
 }
 </script>

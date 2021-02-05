@@ -27,17 +27,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.vue-progress-path path {
-    stroke-width: 12;
-}
- 
-.vue-progress-path .progress {
-    stroke: red;
-}
- 
-.vue-progress-path .background {
-    stroke: #edd;
-}
-</style>
